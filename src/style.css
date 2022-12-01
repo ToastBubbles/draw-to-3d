@@ -1,0 +1,20 @@
+#canvas {
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  border: solid black 1px;
+  width: 400px;
+  height: 400px;
+}
+
+.debugger {
+  position: absolute;
+  z-index: 1000;
+  width: 4px;
+  height: 4px;
+  margin-top: -2px;
+  margin-left: -2px;
+  shape-outside: circle();
+  clip-path: circle();
+  background: red;
+}
