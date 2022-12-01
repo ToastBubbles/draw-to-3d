@@ -266,18 +266,64 @@ let boundaries = {
 
 function pointMaker() {
   points.forEach((element) => {
-    console.log(element);
-    document.getElementById(
-      "dot-daddy"
-    ).innerHTML += `<div id="debugger" style="left: ${element[0]}px; top: ${element[1]}px"></div>`;
-
-    document.getElementById("shape").setAttribute("points", `${points}`);
+    //console.log(points[0][0]);
   });
+
+  //   for (let i = 1; i <= points.length - 2; i++) {
+  //     console.log(points[i][0], element[0]);
+  //     if (points[i][0] - element[0] < 10 && points[i][1] - element[1] < 10) {
+  //       console.log("Oh snap!");
+  //     }
+  //   }
+
+  //document.getElementById(
+  //   "dot-daddy"
+  // ).innerHTML += `<div id="debugger" style="left: ${element[0]}px; top: ${element[1]}px"></div>`;
+
+  document.getElementById("shape").setAttribute("points", `${points}`);
+}
+let ctrlBool = false;
+let zBool = false;
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Meta") {
+    ctrlBool = true;
+  }
+  if (event.key === "z") {
+    zBool = true;
+  }
+  if (ctrlBool && zBool) {
+    undoLine();
+  }
+});
+
+document.addEventListener("keyup", (event) => {
+  if (event.key === "Meta") {
+    ctrlBool = false;
+  }
+  if (event.key === "z") {
+    zBool = false;
+  }
+});
+
+function undoLine() {
+  console.log("undo");
+  if (points.length > 2) {
+    points.pop();
+    pointMaker();
+    //$('textarea').text(textArray);
+  } else if (points.length === 2) {
+    points.pop();
+    points.pop();
+    pointMaker();
+  }
 }
 
 onmousemove = function (e) {
   mouseX = e.clientX;
   mouseY = e.clientY;
+
+  //console.log(e.clientX, e.clientY);
 
   if (
     boundaries.left < mouseX &&
@@ -285,7 +331,7 @@ onmousemove = function (e) {
     boundaries.top < mouseY &&
     boundaries.bottom > mouseY
   ) {
-    console.log("inside canvas");
+    //console.log("inside canvas");
     curX = mouseX;
     curY = mouseY;
     document.getElementById("debugger").style.left = `${curX}px`;
@@ -296,5 +342,5 @@ onmousemove = function (e) {
 onmousedown = function (e) {
   points.push([curX, curY]);
   pointMaker();
-  console.log(points);
+  //console.log(points);
 };

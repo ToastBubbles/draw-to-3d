@@ -22,5 +22,5 @@
 #svg {
   overflow: visible;
   display: block;
-  margin: 0;
+  margin: -10px;
 }
