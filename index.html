@@ -11,8 +11,16 @@
     <link rel="stylesheet" href="./src/style.css" />
   </head>
   <body>
-    <canvas id="canvas"></canvas>
-    <div id="debugger" class="debugger"></div>
+    <div id="canvas"></div>
+    <div id="dot-daddy"></div>
+    <svg id="svg">
+      <polyline
+        id="shape"
+        points=""
+        style="fill: transparent; stroke: green; stroke-width: 4"
+      ></polyline>
+    </svg>
+    <div id="debugger"></div>
     <script src="./src/index.js"></script>
   </body>
 </html>

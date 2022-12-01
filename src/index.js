@@ -111,8 +111,137 @@
 // start();
 // debug();
 
+// let canv = document.getElementById("canvas"),
+//   context = canvas.getContext("2d"),
+//   col = "black",
+//   stroke = 2,
+//   flag = false,
+//   dot_flag = false,
+//   preX = 0,
+//   preY = 0,
+//   curX = 0,
+//   curY = 0,
+//   mouseX = 0,
+//   mouseY = 0;
+
+// let boundaries = {
+//   left: canv.offsetLeft,
+//   right: canv.offsetLeft + canv.offsetWidth,
+//   top: canv.offsetTop,
+//   bottom: canv.offsetTop + canv.offsetHeight,
+// };
+
+// // curX = canv.offsetLeft;
+// // curY = canv.offsetTop;
+
+// onmousemove = function (e) {
+//   mouseX = e.clientX;
+//   mouseY = e.clientY;
+// };
+
+// function start() {
+//   //canvas = document.getElementById("canvas");
+
+//   //rect = canvas.getBoundingClientRect();
+
+//   canvas.addEventListener(
+//     "mousemove",
+//     function (e) {
+//       findxy("move", e);
+//     },
+//     false
+//   );
+//   canvas.addEventListener(
+//     "mousedown",
+//     function (e) {
+//       findxy("down", e);
+//     },
+//     false
+//   );
+//   canvas.addEventListener(
+//     "mouseup",
+//     function (e) {
+//       findxy("up", e);
+//     },
+//     false
+//   );
+//   canvas.addEventListener(
+//     "mouseout",
+//     function (e) {
+//       findxy("out", e);
+//     },
+//     false
+//   );
+// }
+
+// function findxy(action, e) {
+//   document.getElementById("debugger").style.left = `${curX}px`;
+//   document.getElementById("debugger").style.top = `${curY}px`;
+
+//   if (action == "down") {
+//     preX = curX;
+//     preY = curY;
+//     if (
+//       boundaries.left < mouseX &&
+//       boundaries.right > mouseX &&
+//       boundaries.top < mouseY &&
+//       boundaries.bottom > mouseY
+//     ) {
+//       console.log("inside canvas");
+//       curX = mouseX;
+//       curY = mouseY;
+//     }
+//     //console.log(canvas.offsetLeft);
+//     //console.log(e.clientX, mouseX);
+
+//     flag = true;
+//     dot_flag = true;
+//     if (dot_flag) {
+//       context.beginPath();
+//       context.fillStyle = col;
+//       context.fillRect(curX, curY, 2, 2);
+//       context.closePath();
+//       dot_flag = false;
+//     }
+//   }
+//   if (action == "up" /* || action == "out"*/) {
+//     flag = false;
+//   }
+//   if (action == "move") {
+//     if (flag) {
+//       preX = curX;
+//       preY = curY;
+//       if (
+//         boundaries.left < mouseX &&
+//         boundaries.right > mouseX &&
+//         boundaries.top < mouseY &&
+//         boundaries.bottom > mouseY
+//       ) {
+//         console.log("inside canvas");
+//         curX = mouseX;
+//         curY = mouseY;
+//         document.getElementById("debugger").style.left = `${curX}px`;
+//         document.getElementById("debugger").style.top = `${curY}px`;
+//       }
+//       draw();
+//     }
+//   }
+// }
+
+// function draw() {
+//   context.beginPath();
+//   context.moveTo(preX, preY);
+//   context.lineTo(curX, curY);
+//   context.strokeStyle = col;
+//   context.lineWidth = stroke;
+//   context.stroke();
+//   context.closePath();
+// }
+
+// start();
+
 let canv = document.getElementById("canvas"),
-  context = canvas.getContext("2d"),
+  // context = canvas.getContext("2d"),
   col = "black",
   stroke = 2,
   flag = false,
@@ -122,7 +251,8 @@ let canv = document.getElementById("canvas"),
   curX = 0,
   curY = 0,
   mouseX = 0,
-  mouseY = 0;
+  mouseY = 0,
+  points = [];
 
 let boundaries = {
   left: canv.offsetLeft,
@@ -134,108 +264,37 @@ let boundaries = {
 // curX = canv.offsetLeft;
 // curY = canv.offsetTop;
 
+function pointMaker() {
+  points.forEach((element) => {
+    console.log(element);
+    document.getElementById(
+      "dot-daddy"
+    ).innerHTML += `<div id="debugger" style="left: ${element[0]}px; top: ${element[1]}px"></div>`;
+
+    document.getElementById("shape").setAttribute("points", `${points}`);
+  });
+}
+
 onmousemove = function (e) {
   mouseX = e.clientX;
   mouseY = e.clientY;
+
+  if (
+    boundaries.left < mouseX &&
+    boundaries.right > mouseX &&
+    boundaries.top < mouseY &&
+    boundaries.bottom > mouseY
+  ) {
+    console.log("inside canvas");
+    curX = mouseX;
+    curY = mouseY;
+    document.getElementById("debugger").style.left = `${curX}px`;
+    document.getElementById("debugger").style.top = `${curY}px`;
+  }
 };
 
-function start() {
-  //canvas = document.getElementById("canvas");
-
-  //rect = canvas.getBoundingClientRect();
-
-  canvas.addEventListener(
-    "mousemove",
-    function (e) {
-      findxy("move", e);
-    },
-    false
-  );
-  canvas.addEventListener(
-    "mousedown",
-    function (e) {
-      findxy("down", e);
-    },
-    false
-  );
-  canvas.addEventListener(
-    "mouseup",
-    function (e) {
-      findxy("up", e);
-    },
-    false
-  );
-  canvas.addEventListener(
-    "mouseout",
-    function (e) {
-      findxy("out", e);
-    },
-    false
-  );
-}
-
-function findxy(action, e) {
-  document.getElementById("debugger").style.left = `${curX}px`;
-  document.getElementById("debugger").style.top = `${curY}px`;
-
-  if (action == "down") {
-    preX = curX;
-    preY = curY;
-    if (
-      boundaries.left < mouseX &&
-      boundaries.right > mouseX &&
-      boundaries.top < mouseY &&
-      boundaries.bottom > mouseY
-    ) {
-      console.log("inside canvas");
-      curX = mouseX;
-      curY = mouseY;
-    }
-    //console.log(canvas.offsetLeft);
-    //console.log(e.clientX, mouseX);
-
-    flag = true;
-    dot_flag = true;
-    if (dot_flag) {
-      context.beginPath();
-      context.fillStyle = col;
-      context.fillRect(curX, curY, 2, 2);
-      context.closePath();
-      dot_flag = false;
-    }
-  }
-  if (action == "up" /* || action == "out"*/) {
-    flag = false;
-  }
-  if (action == "move") {
-    if (flag) {
-      preX = curX;
-      preY = curY;
-      if (
-        boundaries.left < mouseX &&
-        boundaries.right > mouseX &&
-        boundaries.top < mouseY &&
-        boundaries.bottom > mouseY
-      ) {
-        console.log("inside canvas");
-        curX = mouseX;
-        curY = mouseY;
-        document.getElementById("debugger").style.left = `${curX}px`;
-        document.getElementById("debugger").style.top = `${curY}px`;
-      }
-      draw();
-    }
-  }
-}
-
-function draw() {
-  context.beginPath();
-  context.moveTo(preX, preY);
-  context.lineTo(curX, curY);
-  context.strokeStyle = col;
-  context.lineWidth = stroke;
-  context.stroke();
-  context.closePath();
-}
-
-start();
+onmousedown = function (e) {
+  points.push([curX, curY]);
+  pointMaker();
+  console.log(points);
+};

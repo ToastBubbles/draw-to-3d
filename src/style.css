@@ -7,7 +7,7 @@
   height: 400px;
 }
 
-.debugger {
+#debugger {
   position: absolute;
   z-index: 1000;
   width: 4px;
@@ -17,4 +17,10 @@
   shape-outside: circle();
   clip-path: circle();
   background: red;
+}
+
+#svg {
+  overflow: visible;
+  display: block;
+  margin: 0;
 }
