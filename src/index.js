@@ -10,14 +10,51 @@ let canv = document.getElementById("canvas"),
   curY = 0,
   mouseX = 0,
   mouseY = 0,
-  points = [];
-
+  points = [],
+  offsetPoints = [],
+  offsetPointsTop = [],
+  obj3d = [];
+//base3d = document.getElementById("shape-3d"),
+//top3d = document.getElementById("shape-3d-top");
+function iniLoop() {
+  rotate(0.02, 0, 0);
+  //console.log(obj3d);
+}
 let boundaries = {
   left: canv.offsetLeft,
   right: canv.offsetLeft + canv.offsetWidth,
   top: canv.offsetTop,
   bottom: canv.offsetTop + canv.offsetHeight,
 };
+function generateObject(x, y, z, index) {
+  obj3d[index] = [x, y, z];
+
+  document.getElementById("shape-3d").setAttribute("points", `${offsetPoints}`);
+
+  //   console.log(
+  //     document.querySelector(`#group2:nth-child(${offsetPoints.length - 1})`)
+  //   );
+  updateConnections();
+}
+
+function updateConnections() {
+  for (let i = 0; i < offsetPoints.length; i++) {
+    svgGroup2.children[i].setAttribute(
+      "points",
+      `${offsetPoints[i][0]},${offsetPoints[i][1]},${offsetPoints[i][0]},${
+        offsetPoints[i][1] - zHeight
+      }`
+    );
+    // document
+    //   .querySelector(`#group2:nth-child(${offsetPoints.length})`)
+    //   .setAttribute(
+    //     "points",
+    //     `${startPoint[0]},${startPoint[1]},${startPoint[0]},${
+    //       startPoint[1] - zHeight
+    //     }`
+    //   );
+  }
+}
 
 function pointMaker() {
   //console.log(points);
@@ -60,20 +97,17 @@ function undoLine() {
   }
 }
 function generate3d() {
-  let offsetPoints = [];
-  let offsetPointsTop = [];
-
   let offset = 410;
 
   for (let i = 0; i < points.length; i++) {
     offsetPoints[i] = [points[i][0] + offset, points[i][1]];
     offsetPointsTop[i] = [offsetPoints[i][0], offsetPoints[i][1] - zHeight];
-    generateconnections(offsetPoints[i]);
+
+    if (i === points.length - 1) {
+      generateconnections(offsetPoints[i]);
+      generateObject(offsetPoints[i][0], offsetPoints[i][1], zHeight, i);
+    }
   }
-  document.getElementById("shape-3d").setAttribute("points", `${offsetPoints}`);
-  document
-    .getElementById("shape-3d-top")
-    .setAttribute("points", `${offsetPointsTop}`);
 }
 
 onmousemove = function (e) {
@@ -109,6 +143,7 @@ function snapVert() {
   return [];
 }
 let svgMain = document.getElementById("svg");
+let svgGroup2 = document.getElementById("group2");
 let zHeight = 50;
 
 function generateconnections(startPoint) {
@@ -120,7 +155,7 @@ function generateconnections(startPoint) {
     style="fill: transparent; stroke: green; stroke-width: 4"
   ></polyline>`;
 
-  svgMain.innerHTML += connectorline;
+  svgGroup2.innerHTML += connectorline;
 }
 
 onmousedown = function (e) {
@@ -134,3 +169,53 @@ onmousedown = function (e) {
 
   //console.log(points);
 };
+
+function rotate(pitch, roll, yaw) {
+  var cosa = Math.cos(yaw);
+  var sina = Math.sin(yaw);
+
+  var cosb = Math.cos(-pitch);
+  var sinb = Math.sin(-pitch);
+
+  var cosc = Math.cos(roll);
+  var sinc = Math.sin(roll);
+
+  var Axx = cosa * cosb;
+  var Axy = cosa * sinb * sinc - sina * cosc;
+  var Axz = cosa * sinb * cosc + sina * sinc;
+
+  var Ayx = sina * cosb;
+  var Ayy = sina * sinb * sinc + cosa * cosc;
+  var Ayz = sina * sinb * cosc - cosa * sinc;
+
+  var Azx = -sinb;
+  var Azy = cosb * sinc;
+  var Azz = cosb * cosc;
+
+  for (var i = 0; i < points.length; i++) {
+    var px = offsetPoints[i][0];
+    var py = offsetPoints[i][1];
+    var pz = obj3d[i][2];
+
+    // if(i >= 5){
+    // keys[i].x = (obj3d[i - 4].x - 10) + Axx*px + Axy*py + Axz*pz;
+    // keys[i].y = (obj3d[i - 4].y - 10) + Ayx*px + Ayy*py + Ayz*pz;
+    // keys[i].z = (obj3d[i - 4].z - 10) + Azx*px + Azy*py + Azz*pz;
+    // }else{
+    offsetPoints[i][0] = Axx * px + Axy * py + Axz * pz + 100;
+    offsetPoints[i][1] = Ayx * px + Ayy * py + Ayz * pz - 100;
+    obj3d[i][2] = Azx * px + Azy * py + Azz * pz + 100;
+
+    //console.log(offsetPoints[i][0], offsetPoints[i][1], obj3d[i][2]);
+  }
+}
+function time() {
+  setTimeout(() => {
+    iniLoop();
+    time();
+    //pointMaker();
+    generateObject();
+  }, "20");
+}
+
+time();

@@ -41,6 +41,12 @@
   margin: -10px;
 }
 
+#group2 {
+  overflow: visible;
+  display: block;
+  margin: -10px;
+}
+
 #shape {
   position: absolute;
 
