@@ -60,10 +60,10 @@ function undoLine() {
   }
 }
 function generate3d() {
-  let offsetPoints = points;
-  let offset = 100;
-  for (let i = 0; i < offsetPoints.length; i++) {
-    offsetPoints[i][0] = offsetPoints[i][0] + offset;
+  let offsetPoints = [];
+  let offset = 410;
+  for (let i = 0; i < points.length; i++) {
+    offsetPoints[i] = [points[i][0] + offset, points[i][1]];
   }
   document.getElementById("shape-3d").setAttribute("points", `${offsetPoints}`);
 }
