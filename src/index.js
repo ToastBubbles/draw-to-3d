@@ -339,8 +339,32 @@ onmousemove = function (e) {
   }
 };
 
+function snapVert() {
+  let length = points.length;
+  for (let i = 0; length > 1 && i < length; i++) {
+    if (
+      Math.abs(points[i][0] - curX) < 20 &&
+      Math.abs(points[i][1] - curY) < 20
+    ) {
+      //points.push();
+      //console.log(points[i][0], points[i][1]);
+      //console.log(curX, curY);
+      return [points[i][0], points[i][1]];
+    }
+  }
+  return [];
+}
+
 onmousedown = function (e) {
-  points.push([curX, curY]);
+  console.log(points.length);
+
+  if (snapVert().length > 0) {
+    points.push(snapVert());
+  } else {
+    points.push([curX, curY]);
+  }
+
   pointMaker();
+
   //console.log(points);
 };
