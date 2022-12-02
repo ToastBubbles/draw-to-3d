@@ -20,7 +20,7 @@ let boundaries = {
 };
 
 function pointMaker() {
-  console.log(points);
+  //console.log(points);
   document.getElementById("shape").setAttribute("points", `${points}`);
   generate3d();
 }
@@ -61,11 +61,19 @@ function undoLine() {
 }
 function generate3d() {
   let offsetPoints = [];
+  let offsetPointsTop = [];
+
   let offset = 410;
+
   for (let i = 0; i < points.length; i++) {
     offsetPoints[i] = [points[i][0] + offset, points[i][1]];
+    offsetPointsTop[i] = [offsetPoints[i][0], offsetPoints[i][1] - zHeight];
+    generateconnections(offsetPoints[i]);
   }
   document.getElementById("shape-3d").setAttribute("points", `${offsetPoints}`);
+  document
+    .getElementById("shape-3d-top")
+    .setAttribute("points", `${offsetPointsTop}`);
 }
 
 onmousemove = function (e) {
@@ -99,6 +107,20 @@ function snapVert() {
     }
   }
   return [];
+}
+let svgMain = document.getElementById("svg");
+let zHeight = 50;
+
+function generateconnections(startPoint) {
+  let connectorline = `<polyline
+    id="shape-3d"
+    points="${startPoint[0]},${startPoint[1]},${startPoint[0]},${
+    startPoint[1] - zHeight
+  }"
+    style="fill: transparent; stroke: green; stroke-width: 4"
+  ></polyline>`;
+
+  svgMain.innerHTML += connectorline;
 }
 
 onmousedown = function (e) {
