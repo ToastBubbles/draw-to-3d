@@ -1,7 +1,16 @@
 #canvas {
   position: absolute;
   top: 10%;
-  left: 10%;
+  left: 20px;
+  border: solid black 1px;
+  width: 400px;
+  height: 400px;
+}
+
+#canvas-3d {
+  position: absolute;
+  top: 10%;
+  left: 430px;
   border: solid black 1px;
   width: 400px;
   height: 400px;
@@ -20,6 +29,21 @@
 }
 
 #svg {
+  overflow: visible;
+  display: block;
+  margin: -10px;
+}
+#shape-3d {
+  position: absolute;
+
+  overflow: visible;
+  display: block;
+  margin: -10px;
+}
+
+#shape {
+  position: absolute;
+
   overflow: visible;
   display: block;
   margin: -10px;
