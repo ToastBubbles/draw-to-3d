@@ -11,15 +11,20 @@
     <link rel="stylesheet" href="./src/style.css" />
   </head>
   <body>
-    <div id="canvas"></div>
     <div id="dot-daddy"></div>
-    <svg id="svg">
-      <g fill="orange" fill-opacity="50%">
-        <polyline
-          id="shape"
-          points=""
-          style="stroke: green; stroke-width: 4"
-        ></polyline>
+    <div id="canvas">
+      <svg id="svg">
+        <g fill="orange" fill-opacity="50%">
+          <polyline
+            id="shape"
+            points=""
+            style="stroke: green; stroke-width: 4"
+          ></polyline>
+        </g>
+      </svg>
+    </div>
+    <div id="canvas-3d">
+      <svg>
         <polyline
           id="shape-3d"
           points=""
@@ -30,10 +35,9 @@
           points=""
           style="stroke: red; stroke-width: 4"
         ></polyline>
-      </g>
-      <g id="group2"></g>
-    </svg>
-    <div id="canvas-3d"></div>
+        <g id="group2"></g>
+      </svg>
+    </div>
 
     <div id="debugger"></div>
     <script src="./src/index.js"></script>

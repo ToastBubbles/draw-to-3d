@@ -14,10 +14,13 @@ let canv = document.getElementById("canvas"),
   offsetPoints = [],
   offsetPointsTop = [],
   obj3d = [];
+
+//add 3d object
+//fix spinnging
 //base3d = document.getElementById("shape-3d"),
 //top3d = document.getElementById("shape-3d-top");
 function iniLoop() {
-  rotate(0.02, 0, 0);
+  //rotate(0.02, 0, 0);
   //console.log(obj3d);
 }
 let boundaries = {
@@ -31,9 +34,6 @@ function generateObject(x, y, z, index) {
 
   document.getElementById("shape-3d").setAttribute("points", `${offsetPoints}`);
 
-  //   console.log(
-  //     document.querySelector(`#group2:nth-child(${offsetPoints.length - 1})`)
-  //   );
   updateConnections();
 }
 
@@ -45,14 +45,6 @@ function updateConnections() {
         offsetPoints[i][1] - zHeight
       }`
     );
-    // document
-    //   .querySelector(`#group2:nth-child(${offsetPoints.length})`)
-    //   .setAttribute(
-    //     "points",
-    //     `${startPoint[0]},${startPoint[1]},${startPoint[0]},${
-    //       startPoint[1] - zHeight
-    //     }`
-    //   );
   }
 }
 
@@ -148,7 +140,7 @@ let zHeight = 50;
 
 function generateconnections(startPoint) {
   let connectorline = `<polyline
-    id="shape-3d"
+    id="shape-3d-con"
     points="${startPoint[0]},${startPoint[1]},${startPoint[0]},${
     startPoint[1] - zHeight
   }"
@@ -197,20 +189,15 @@ function rotate(pitch, roll, yaw) {
     var py = offsetPoints[i][1];
     var pz = obj3d[i][2];
 
-    // if(i >= 5){
-    // keys[i].x = (obj3d[i - 4].x - 10) + Axx*px + Axy*py + Axz*pz;
-    // keys[i].y = (obj3d[i - 4].y - 10) + Ayx*px + Ayy*py + Ayz*pz;
-    // keys[i].z = (obj3d[i - 4].z - 10) + Azx*px + Azy*py + Azz*pz;
-    // }else{
-    offsetPoints[i][0] = Axx * px + Axy * py + Axz * pz + 100;
-    offsetPoints[i][1] = Ayx * px + Ayy * py + Ayz * pz - 100;
-    obj3d[i][2] = Azx * px + Azy * py + Azz * pz + 100;
-
-    //console.log(offsetPoints[i][0], offsetPoints[i][1], obj3d[i][2]);
+    offsetPoints[i][0] = Axx * px + Axy * py + Axz * pz;
+    offsetPoints[i][1] = Ayx * px + Ayy * py + Ayz * pz;
+    obj3d[i][2] = Azx * px + Azy * py + Azz * pz;
   }
 }
 function time() {
   setTimeout(() => {
+    //console.log(offsetPoints[0], offsetPoints[1]);
+    console.log(offsetPoints);
     iniLoop();
     time();
     //pointMaker();
