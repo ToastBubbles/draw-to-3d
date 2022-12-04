@@ -17,6 +17,8 @@ let canv = document.getElementById("canvas"),
 
 //add 3d object
 //fix spinnging
+//add functions
+//adjust params
 //base3d = document.getElementById("shape-3d"),
 //top3d = document.getElementById("shape-3d-top");
 function iniLoop() {
