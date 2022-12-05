@@ -48,6 +48,7 @@
 .svg {
   overflow: visible;
   display: block;
+  /* margin: 200px; */
 }
 #shape-3d {
   position: absolute;
@@ -55,7 +56,7 @@
   overflow: visible;
   display: block;
 
-  margin: -10px;
+  /* margin: -10px; */
 }
 #shape-3d-top {
   position: absolute;
@@ -79,4 +80,11 @@
   overflow: visible;
   display: block;
   margin: -10px;
+}
+.centered {
+  position: absolute;
+
+  overflow: visible;
+  display: block;
+  margin-left: 200px;
 }
