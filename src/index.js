@@ -1,4 +1,5 @@
 let canv = document.getElementById("canvas"),
+  canv3d = document.getElementById("canvas-3d"),
   // context = canvas.getContext("2d"),
   col = "black",
   stroke = 2,
@@ -13,14 +14,8 @@ let canv = document.getElementById("canvas"),
   points = [],
   offsetPoints = [],
   offsetPointsTop = [],
-  obj3d = [];
+  offsetZ = 20;
 
-//add 3d object
-//fix spinnging
-//add functions
-//adjust params
-//base3d = document.getElementById("shape-3d"),
-//top3d = document.getElementById("shape-3d-top");
 function iniLoop() {
   //rotate(0.02, 0, 0);
   //console.log(obj3d);
@@ -31,8 +26,8 @@ let boundaries = {
   top: canv.offsetTop,
   bottom: canv.offsetTop + canv.offsetHeight,
 };
-function generateObject(x, y, z, index) {
-  obj3d[index] = [x, y, z];
+function generateObject() {
+  //obj3d[index] = [x, y, z];
 
   document.getElementById("shape-3d").setAttribute("points", `${offsetPoints}`);
 
@@ -44,7 +39,7 @@ function updateConnections() {
     svgGroup2.children[i].setAttribute(
       "points",
       `${offsetPoints[i][0]},${offsetPoints[i][1]},${offsetPoints[i][0]},${
-        offsetPoints[i][1] - zHeight
+        offsetPoints[i][1] - offsetZ
       }`
     );
   }
@@ -53,6 +48,7 @@ function updateConnections() {
 function pointMaker() {
   //console.log(points);
   document.getElementById("shape").setAttribute("points", `${points}`);
+  //console.log(points[0], points[1], mouseX, mouseY);
   generate3d();
 }
 let ctrlBool = false;
@@ -91,15 +87,15 @@ function undoLine() {
   }
 }
 function generate3d() {
-  let offset = 410;
+  let offset = canv3d.offsetLeft;
 
   for (let i = 0; i < points.length; i++) {
-    offsetPoints[i] = [points[i][0] + offset, points[i][1]];
-    offsetPointsTop[i] = [offsetPoints[i][0], offsetPoints[i][1] - zHeight];
+    offsetPoints[i] = [points[i][0], points[i][1]];
+    offsetPointsTop[i] = [offsetPoints[i][0], offsetPoints[i][1] - offsetZ];
 
     if (i === points.length - 1) {
       generateconnections(offsetPoints[i]);
-      generateObject(offsetPoints[i][0], offsetPoints[i][1], zHeight, i);
+      generateObject();
     }
   }
 }
@@ -128,23 +124,23 @@ function snapVert() {
   let length = points.length;
   for (let i = 0; length > 1 && i < length; i++) {
     if (
-      Math.abs(points[i][0] - curX) < 20 &&
-      Math.abs(points[i][1] - curY) < 20
+      Math.abs(points[i][0] - curX + boundaries.left) < 20 &&
+      Math.abs(points[i][1] - curY + boundaries.top) < 20
     ) {
+      console.log("snapped!");
       return [points[i][0], points[i][1]];
     }
   }
   return [];
 }
-let svgMain = document.getElementById("svg");
+// let svgMain = document.getElementById("svg");
 let svgGroup2 = document.getElementById("group2");
-let zHeight = 50;
 
 function generateconnections(startPoint) {
   let connectorline = `<polyline
     id="shape-3d-con"
     points="${startPoint[0]},${startPoint[1]},${startPoint[0]},${
-    startPoint[1] - zHeight
+    startPoint[1] - offsetZ
   }"
     style="fill: transparent; stroke: green; stroke-width: 4"
   ></polyline>`;
@@ -156,7 +152,7 @@ onmousedown = function (e) {
   if (snapVert().length > 0) {
     points.push(snapVert());
   } else {
-    points.push([curX, curY]);
+    points.push([curX - boundaries.left, curY - boundaries.top]);
   }
 
   pointMaker();
@@ -189,17 +185,18 @@ function rotate(pitch, roll, yaw) {
   for (var i = 0; i < points.length; i++) {
     var px = offsetPoints[i][0];
     var py = offsetPoints[i][1];
-    var pz = obj3d[i][2];
+    var pz = offsetZ; //obj3d[i][2];
 
     offsetPoints[i][0] = Axx * px + Axy * py + Axz * pz;
     offsetPoints[i][1] = Ayx * px + Ayy * py + Ayz * pz;
-    obj3d[i][2] = Azx * px + Azy * py + Azz * pz;
+    offsetZ = Azx * px + Azy * py + Azz * pz;
   }
 }
 function time() {
   setTimeout(() => {
     //console.log(offsetPoints[0], offsetPoints[1]);
-    console.log(offsetPoints);
+    //console.log(offsetPoints);
+
     iniLoop();
     time();
     //pointMaker();

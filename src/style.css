@@ -28,10 +28,9 @@
   background: red;
 }
 
-#svg {
+.svg {
   overflow: visible;
   display: block;
-  margin: -10px;
 }
 #shape-3d {
   position: absolute;
@@ -42,6 +41,7 @@
 }
 
 #group2 {
+  position: absolute;
   overflow: visible;
   display: block;
   margin: -10px;
