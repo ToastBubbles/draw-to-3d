@@ -38,7 +38,7 @@ function renderObject() {
   let stringPointsTop = "";
   for (const key in obj3d) {
     const value = obj3d[key];
-    if (value.type === "bottom") {
+    if (value.index > 0) {
       stringPoints += value.x + "," + value.y + ",";
 
       updateConnections(
@@ -46,7 +46,7 @@ function renderObject() {
         value,
         obj3d[getEndPoint(obj3d, -value.index)]
       );
-    } else if (value.type === "top") {
+    } else if (value.index < 0) {
       stringPointsTop += value.x + "," + value.y + ",";
     }
   }
@@ -130,14 +130,14 @@ function generate3d() {
       x: offsetPoints[i][0] - canv3d.offsetLeft / 2,
       y: offsetPoints[i][1] + canv3d.offsetTop / 2,
       z: -offsetZ,
-      type: "bottom",
+      ////type: "bottom",
       index: i + 1,
     };
     obj3d[`point -` + i] = {
       x: offsetPoints[i][0] - canv3d.offsetLeft / 2,
       y: offsetPoints[i][1] + canv3d.offsetTop / 2,
       z: offsetZ,
-      type: "top",
+      ////type: "top",
       index: -i - 1,
     };
 
