@@ -1,6 +1,6 @@
 #canvas {
   position: absolute;
-  top: 10%;
+  top: 30px;
   left: 20px;
   border: solid black 1px;
   width: 400px;
@@ -9,7 +9,7 @@
 
 #canvas-3d {
   position: absolute;
-  top: 10%;
+  top: 30px;
   left: 430px;
   border: solid black 1px;
   width: 400px;
@@ -24,7 +24,7 @@
 
 .slider {
   appearance: none;
-  width: 100%; /* Full-width */
+  width: 800px; /* Full-width */
   height: 25px; /* Specified height */
   background: #d3d3d3; /* Grey background */
   outline: none; /* Remove outline */
@@ -87,4 +87,15 @@
   overflow: visible;
   display: block;
   margin-left: 200px;
+}
+
+.textInputs {
+  position: absolute;
+  margin-top: 500px;
+  text-align: right;
+}
+
+.textfield {
+  margin-left: 10px;
+  width: 100px;
 }
