@@ -14,10 +14,15 @@ let canv = document.getElementById("canvas"),
   points = [],
   offsetPoints = [],
   offsetPointsTop = [],
-  offsetZ = 20;
+  offsetZ = 20,
+  rotZ = 20,
+  mouseInside = false;
+
+let slider = document.getElementById("z-height-range");
 
 function iniLoop() {
-  //rotate(0.02, 0, 0);
+  rotate((mouseX / window.screen.width) * 0.1, 0.0, 0.0, offsetPoints);
+  rotate((mouseX / window.screen.width) * 0.1, 0.0, 0.0, offsetPointsTop);
   //console.log(obj3d);
 }
 let boundaries = {
@@ -27,9 +32,10 @@ let boundaries = {
   bottom: canv.offsetTop + canv.offsetHeight,
 };
 function generateObject() {
-  //obj3d[index] = [x, y, z];
-
   document.getElementById("shape-3d").setAttribute("points", `${offsetPoints}`);
+  document
+    .getElementById("shape-3d-top")
+    .setAttribute("points", `${offsetPointsTop}`);
 
   updateConnections();
 }
@@ -38,9 +44,7 @@ function updateConnections() {
   for (let i = 0; i < offsetPoints.length; i++) {
     svgGroup2.children[i].setAttribute(
       "points",
-      `${offsetPoints[i][0]},${offsetPoints[i][1]},${offsetPoints[i][0]},${
-        offsetPoints[i][1] - offsetZ
-      }`
+      `${offsetPoints[i][0]},${offsetPoints[i][1]},${offsetPointsTop[i][0]},${offsetPointsTop[i][1]}`
     );
   }
 }
@@ -87,14 +91,14 @@ function undoLine() {
   }
 }
 function generate3d() {
-  let offset = canv3d.offsetLeft;
-
+  // let offset = canv3d.offsetLeft;
+  //console.log(offsetZ);
   for (let i = 0; i < points.length; i++) {
-    offsetPoints[i] = [points[i][0], points[i][1]];
+    offsetPoints[i] = [points[i][0] - 200, points[i][1] - 200];
     offsetPointsTop[i] = [offsetPoints[i][0], offsetPoints[i][1] - offsetZ];
 
     if (i === points.length - 1) {
-      generateconnections(offsetPoints[i]);
+      generateconnections(offsetPoints[i], offsetPointsTop[i]);
       generateObject();
     }
   }
@@ -112,11 +116,14 @@ onmousemove = function (e) {
     boundaries.top < mouseY &&
     boundaries.bottom > mouseY
   ) {
+    mouseInside = true;
     //console.log("inside canvas");
     curX = mouseX;
     curY = mouseY;
     document.getElementById("debugger").style.left = `${curX}px`;
     document.getElementById("debugger").style.top = `${curY}px`;
+  } else {
+    mouseInside = false;
   }
 };
 
@@ -136,31 +143,42 @@ function snapVert() {
 // let svgMain = document.getElementById("svg");
 let svgGroup2 = document.getElementById("group2");
 
-function generateconnections(startPoint) {
+function generateconnections(startPoint, endPoint) {
   let connectorline = `<polyline
     id="shape-3d-con"
-    points="${startPoint[0]},${startPoint[1]},${startPoint[0]},${
-    startPoint[1] - offsetZ
-  }"
+    points="${startPoint[0]},${startPoint[1]},${endPoint[0]},${endPoint[1]}"
     style="fill: transparent; stroke: green; stroke-width: 4"
   ></polyline>`;
 
+  // let connectorline = `<polyline
+  //   id="shape-3d-con"
+  //   points="${startPoint[0]},${startPoint[1]},${startPoint[0]},${
+  //   startPoint[1] - offsetZ
+  // }"
+  //   style="fill: transparent; stroke: green; stroke-width: 4"
+  // ></polyline>`;
   svgGroup2.innerHTML += connectorline;
 }
 
 onmousedown = function (e) {
-  if (snapVert().length > 0) {
-    points.push(snapVert());
-  } else {
-    points.push([curX - boundaries.left, curY - boundaries.top]);
+  if (mouseInside) {
+    if (snapVert().length > 0) {
+      points.push(snapVert());
+    } else {
+      points.push([curX - boundaries.left, curY - boundaries.top]);
+    }
+
+    pointMaker();
   }
-
-  pointMaker();
-
   //console.log(points);
 };
 
-function rotate(pitch, roll, yaw) {
+slider.oninput = function () {
+  offsetZ = this.value;
+  pointMaker();
+};
+
+function rotate(pitch, roll, yaw, obj) {
   var cosa = Math.cos(yaw);
   var sina = Math.sin(yaw);
 
@@ -183,13 +201,14 @@ function rotate(pitch, roll, yaw) {
   var Azz = cosb * cosc;
 
   for (var i = 0; i < points.length; i++) {
-    var px = offsetPoints[i][0];
-    var py = offsetPoints[i][1];
-    var pz = offsetZ; //obj3d[i][2];
+    var px = obj[i][0];
+    var py = obj[i][1];
+    var pz = rotZ; //obj3d[i][2];
 
-    offsetPoints[i][0] = Axx * px + Axy * py + Axz * pz;
-    offsetPoints[i][1] = Ayx * px + Ayy * py + Ayz * pz;
-    offsetZ = Azx * px + Azy * py + Azz * pz;
+    obj[i][0] = Axx * px + Axy * py + Axz * pz;
+    obj[i][1] = Ayx * px + Ayy * py + Ayz * pz;
+
+    rotZ = Azx * px + Azy * py + Azz * pz;
   }
 }
 function time() {
@@ -201,6 +220,7 @@ function time() {
     time();
     //pointMaker();
     generateObject();
+    //updateConnections();
   }, "20");
 }
 

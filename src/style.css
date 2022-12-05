@@ -16,6 +16,23 @@
   height: 400px;
 }
 
+.slide-container {
+  width: 100%;
+  position: absolute;
+  margin-top: 450px;
+}
+
+.slider {
+  appearance: none;
+  width: 100%; /* Full-width */
+  height: 25px; /* Specified height */
+  background: #d3d3d3; /* Grey background */
+  outline: none; /* Remove outline */
+  opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+
+  transition: opacity 0.2s;
+}
+
 #debugger {
   position: absolute;
   z-index: 1000;
@@ -37,6 +54,15 @@
 
   overflow: visible;
   display: block;
+
+  margin: -10px;
+}
+#shape-3d-top {
+  position: absolute;
+
+  overflow: visible;
+  display: block;
+
   margin: -10px;
 }
 
