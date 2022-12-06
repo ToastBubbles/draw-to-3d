@@ -7,7 +7,7 @@
       content="IE=10; IE=9; IE=8; IE=7; IE=EDGE"
     />
     <!-- <link rel="icon" href="./img/icon.png" /> -->
-    <title>Draw away!</title>
+    <title>3D Wiredraw</title>
     <link rel="stylesheet" href="./src/style.css" />
   </head>
   <body>
@@ -40,9 +40,7 @@
       </svg>
     </div></div>
     <br>
-    <div class="slide-container">
-      <input type="range" min="0" max="100" value="10" class="slider" id="z-height-range">
-    </div>
+    
     <!-- <div class="textInputs">
       <label for="pitch">Pitch:</label>
       <input class="textfield" type="number" id="pitch" name="pitch" value="0" min="0" max="1">
@@ -54,6 +52,12 @@
       <input class="textfield" type="number" id="roll" name="roll" value="0" min="0" max="1">
     </div> -->
     <div class="textInputs">
+
+      <label for="z-height-range">Depth:</label>
+    <div class="slide-container-miccro">
+      <input type="range" min="0" max="100" value="10" class="slider" id="z-height-range">
+    </div>
+
       <label for="pitch-range">Pitch:</label>
       <div class="slide-container-micro">
         <input type="range" min="0" max="100" value="0" class="slider-micro" id="pitch-range">
@@ -70,7 +74,10 @@
       </div>
     </div>
   </div>
-
+    <div class="instructions">
+      <h3>Instructions:</h3>
+      <p>Click on the left canvas to create verticies, then use the sliders to adjust 3D shape.</p>
+    </div>
     <div id="debugger"></div>
     <script src="./src/index.js"></script>
   </body>

@@ -25,7 +25,7 @@ function iniLoop() {
   let pitch = document.getElementById("pitch-range").value / 200 || 0,
     roll = document.getElementById("roll-range").value / 200 || 0,
     yaw = document.getElementById("yaw-range").value / 200 || 0;
-  offsetZ = document.getElementById("z-height-range").value;
+  // offsetZ = document.getElementById("z-height-range").value;
   rotate(pitch, roll, yaw);
 }
 let boundaries = {
@@ -206,11 +206,11 @@ onmousedown = function (e) {
   //console.log(points);
 };
 
-// slider.oninput = function () {
-//   offsetZ = this.value;
-//   rotZ = this.value;
-//   pointMaker();
-// };
+slider.oninput = function () {
+  offsetZ = this.value;
+  rotZ = this.value;
+  pointMaker();
+};
 
 function rotate(pitch, roll, yaw) {
   var cosa = Math.cos(yaw);
