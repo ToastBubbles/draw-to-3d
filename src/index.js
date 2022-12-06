@@ -129,14 +129,14 @@ function generate3d() {
 
     obj3d[`point ` + i] = {
       x: offsetPoints[i][0] - canv3d.offsetLeft / 2 + 9,
-      y: offsetPoints[i][1],
+      y: offsetPoints[i][1] + canv3d.offsetHeight / 2 - 400, // - canv3d.offsetTop,
       z: -offsetZ,
       ////type: "bottom",
       index: i + 1,
     };
     obj3d[`point -` + i] = {
       x: offsetPoints[i][0] - canv3d.offsetLeft / 2 + 9,
-      y: offsetPoints[i][1],
+      y: offsetPoints[i][1] + canv3d.offsetHeight / 2 - 400, // - canv3d.offsetTop,
       z: offsetZ,
       ////type: "top",
       index: -i - 1,
@@ -215,9 +215,10 @@ slider.oninput = function () {
 function rotate(pitch, roll, yaw) {
   var cosa = Math.cos(yaw);
   var sina = Math.sin(yaw);
+  //console.log(cosa);
 
-  var cosb = Math.cos(-pitch);
-  var sinb = Math.sin(-pitch);
+  var cosb = Math.cos(pitch);
+  var sinb = Math.sin(pitch);
 
   var cosc = Math.cos(roll);
   var sinc = Math.sin(roll);
