@@ -16,17 +16,20 @@ let canv = document.getElementById("canvas"),
   offsetZ = 20,
   rotZ = 20,
   mouseInside = false,
-  obj3d = {};
+  obj3d = {},
+  svgFillBottom = "",
+  svgFillTop = "";
 
 let slider = document.getElementById("z-height-range");
 let svgGroup2 = document.getElementById("group2");
+let wfCheckBox = document.getElementById("wireframe-cb");
 
 function iniLoop() {
   let pitch = document.getElementById("pitch-range").value / 200 || 0,
     roll = document.getElementById("roll-range").value / 200 || 0,
     yaw = document.getElementById("yaw-range").value / 200 || 0;
   // offsetZ = document.getElementById("z-height-range").value;
-  rotate(pitch, roll, yaw);
+  rotate(yaw, roll, pitch);
 }
 let boundaries = {
   left: canv.offsetLeft,
@@ -90,6 +93,21 @@ function pointMaker() {
 }
 let ctrlBool = false;
 let zBool = false;
+
+function checkboxClicked() {
+  if (wfCheckBox.checked) {
+    console.log("checked");
+    document
+      .getElementById("shape-3d")
+      .setAttribute("fill", `${"transparent"}`);
+    document
+      .getElementById("shape-3d-top")
+      .setAttribute("fill", `${"transparent"}`);
+  } else {
+    document.getElementById("shape-3d").setAttribute("fill", `${"blue"}`);
+    document.getElementById("shape-3d-top").setAttribute("fill", `${"red"}`);
+  }
+}
 
 document.addEventListener("keydown", (event) => {
   if (event.key === "Meta") {
