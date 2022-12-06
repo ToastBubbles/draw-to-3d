@@ -129,14 +129,14 @@ function generate3d() {
 
     obj3d[`point ` + i] = {
       x: offsetPoints[i][0] - canv3d.offsetLeft / 2,
-      y: offsetPoints[i][1] + canv3d.offsetTop / 2,
+      y: offsetPoints[i][1],
       z: -offsetZ,
       ////type: "bottom",
       index: i + 1,
     };
     obj3d[`point -` + i] = {
       x: offsetPoints[i][0] - canv3d.offsetLeft / 2,
-      y: offsetPoints[i][1] + canv3d.offsetTop / 2,
+      y: offsetPoints[i][1],
       z: offsetZ,
       ////type: "top",
       index: -i - 1,
