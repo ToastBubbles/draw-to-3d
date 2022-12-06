@@ -1,17 +1,26 @@
+body {
+  background: #222;
+}
+
+.content-wrapper {
+}
+
 #canvas {
   position: absolute;
+
   top: 30px;
   left: 20px;
-  border: solid black 1px;
+  border: solid #777 1px;
   width: 400px;
   height: 400px;
 }
 
 #canvas-3d {
   position: absolute;
+
   top: 30px;
   left: 430px;
-  border: solid black 1px;
+  border: solid #777 1px;
   width: 400px;
   height: 400px;
 }
@@ -26,7 +35,7 @@
   appearance: none;
   width: 800px; /* Full-width */
   height: 25px; /* Specified height */
-  background: #d3d3d3; /* Grey background */
+  background: #555; /* Grey background */
   outline: none; /* Remove outline */
   opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
 
@@ -91,11 +100,14 @@
 
 .textInputs {
   position: absolute;
+  color: #ccc;
   margin-top: 500px;
   text-align: right;
 }
 
 .textfield {
+  background: #555; /* Grey background */
+  color: #ccc;
   margin-left: 10px;
-  width: 100px;
+  width: 60px;
 }
