@@ -29,7 +29,7 @@ function iniLoop() {
     roll = document.getElementById("roll-range").value / 200 || 0,
     yaw = document.getElementById("yaw-range").value / 200 || 0;
   // offsetZ = document.getElementById("z-height-range").value;
-  rotate(yaw, roll, pitch);
+  rotate(yaw, pitch, roll);
 }
 let boundaries = {
   left: canv.offsetLeft,
